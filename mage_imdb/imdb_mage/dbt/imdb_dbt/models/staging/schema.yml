@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+    - name: staging
+      database: dtc-de-410416
+      schema: imdb_dataset
+
+    - tables:
+        - name: movies_data.sql
+        

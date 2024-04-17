@@ -1,0 +1,124 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - standardized_col_names
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: gcs_to_bigquery
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: gcs_to_bigquery
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - bigquery_export
+  - partitioned_tbl_export_bq
+  - dbt/imdb_dbt/models/example/my_second_dbt_model
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: standardized_col_names
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - gcs_to_bigquery
+  uuid: standardized_col_names
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    dbt_project_name: dbt/imdb_dbt
+    file_path: dbt/imdb_dbt/models/example/my_second_dbt_model.sql
+    file_source:
+      path: dbt/imdb_dbt/models/example/my_second_dbt_model.sql
+      project_path: dbt/imdb_dbt
+    limit: 1000
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: dbt/imdb_dbt/models/example/my_second_dbt_model
+  retry_config: null
+  status: failed
+  timeout: null
+  type: dbt
+  upstream_blocks:
+  - standardized_col_names
+  uuid: dbt/imdb_dbt/models/example/my_second_dbt_model
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: bigquery
+    data_provider_database: dtc-de-410416
+    data_provider_profile: default
+    data_provider_schema: imdb_dataset
+    data_provider_table: imdb_data_partitioned
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: replace
+    limit: 1000
+    use_raw_sql: true
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: PARTITIONED_TBL_EXPORT_BQ
+  retry_config: null
+  status: failed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - standardized_col_names
+  uuid: partitioned_tbl_export_bq
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: bigquery_export
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - standardized_col_names
+  uuid: bigquery_export
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-04-14 22:56:37.886914+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: GCS_to_BQ_pipeline
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: gcs_to_bq_pipeline
+variables_dir: /home/src/mage_data/imdb_mage
+widgets: []
